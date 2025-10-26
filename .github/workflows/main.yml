@@ -1,0 +1,41 @@
+name: Pipeline de Seguridad CI/CD
+
+# Se ejecuta cada vez que haces 'push' a la rama 'main'
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    # Usamos un servidor virtual de Ubuntu para ejecutar los pasos
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clona tu repositorio en el servidor virtual
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      # 2. Configura Node.js
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Puedes usar 18 o 20
+
+      # 3. Construcción de la aplicación (Instalar dependencias)
+      - name: Instalar dependencias (Construcción)
+        run: npm install
+
+      # 4. Pruebas Automatizadas (Simulado)
+      # (En un proyecto real, aquí correrías 'npm test')
+      - name: Pruebas automatizadas (Simulado)
+        run: echo ">>> Ejecutando pruebas unitarias... OK!"
+
+      # 5. Escaneo de Vulnerabilidades (¡Requerido por la tarea!)
+      - name: Escaneo de vulnerabilidades
+        run: npm audit
+
+      # 6. Despliegue en Pruebas (Simulado)
+      - name: Despliegue en entorno de pruebas (Simulado)
+        run: |
+          echo ">>> Desplegando en servidor de pruebas..."
+          echo ">>> ¡Despliegue simulado exitosamente!"
